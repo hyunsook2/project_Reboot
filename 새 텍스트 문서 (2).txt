@@ -1,0 +1,63 @@
+select 함수 3개필요
+
+1. level 1 사장 (최상위 노드= 고정값)Reboot
+ORGCODE = 010000000 , 어퍼코드 = 00000000 고정
+
+
+2.level2 부서 
+부서를 중복제거한 부서를 검색해서 2,3,4로 구현 
+부서명은 내림차순(가나다순)으로 순서대로 첫번째는 
+ORGCODE= 02000000 , 0300000  고정임
+ORGIPPERCODE = 01000000 고정
+ 
+3. 레벨 3 팀원 팀장 SELECT GRAGE  0 - 팀장 변환해서 저장하고 1이면 팀원으로 변환해서 디비에 저장
+각 부서별로 팀원 팀장 하나씩 생성
+ORG 코드 = 020000000 인 부서의 
+팀원 팀장 (가져올떈 중복제거) 추가 하는데 어퍼 코드가 부서의 ORG 코드를 가져옴 
+팀원, 팀장의 어퍼코드 = 소속 부서의 ORG코드
+
+ORG 코드 = 030000000 인 부 ....
+
+
+4. 레벨 4   각 부서의 각 팀장과 팀원의 이름을 추가
+ORGCODE -> 어퍼코드 들어오는거고
+관계 
+
+
+2. 부서명 디비에 추가하는 함수의 셀렉트문 
+INSERT INTO ORG  ( CODE, UPPER, NAME , LEVEL , ORDER2)
+value ( ?  , ? ,DEPTN, ?, ? )
+
+INSERT If  ( 코두 , 어퍼, 부서네임 , 레벨 , ?)
+VALUUIE ( ?  , 01000000 ,0 , 2, * )
+
+INSERT If  ( 코두 , 어퍼, 부서네임 , 레벨 , ?)
+VALUUIE ( ?  , 01000000 ,1 , 2, * )
+
+INSERT If  ( 코두 , 어퍼, 부서네임 , 레벨 , ?)
+VALUUIE ( ?  , 01000000 ,2 , 2, * )
+
+3. 팀장 팀원 디비에 추가하는 함수의 셀렉트문 
+INSERT If  ( 코두 , 어퍼, 네임 , 레벨 , ?)
+VALUUIE ( ?  , ? ,GRADE  . ? ? )
+
+0 1 -> 팀원 팀장 
+
+
+3. 이름 디비에 추가하는 함수의 셀렉트문 
+INSERT If  ( 코두 , 어퍼, 네임 , 레벨 , ?)
+VALUUIE ( ?  , ? ,NAME  . ? ? )
+
+(select deptn from info)
+
+TreeDBGetDAT, DTO -> 기존 INFO 디비에서 GRAGE0 NAME DEPT  값을 가져올 DTO 틀과, 가져올 함수를 작성할 DAO 
+TreeDBInputDAO, DTO -> Tree 전용 디비에 코드, 어퍼코드 ,네임 , 레벨  값을 넣을  DTO 와 DAO 
+
+GRAGE NAME DEPT 
+
+오라클 쿼리문을 짤건데
+
+INFO TABLE 의 DEPTN 을 중복을 제거하여 출력된 부서명을 오름차순 순서대로 
+ORG TABLE에 값을 넣고 싶어.
+
+INSERT INTO ORG ( ORGCODE, ORGUPPERCODE, ORGNAME, ORGLEVEL , ORGSTEP)
